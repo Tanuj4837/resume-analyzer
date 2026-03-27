@@ -21,5 +21,13 @@ git clone https://github.com/yourusername/resume-analyzer.git
 cd resume-analyzer
 pip install -r requirements.txt
 streamlit run app.py
+```
+## 💡 Future Improvements   👈 ADD HERE
+- Integrate OpenAI/Gemini API for advanced AI feedback
+- Add job description matching for better ATS scoring
+- Improve NLP using spaCy/BERT embeddings
+- Deploy application for public access
 
+## 👨‍💻 Author
+Tanuj Kumar
 
