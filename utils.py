@@ -1,42 +1,68 @@
 import PyPDF2
 import re
-import random
 
-# --- Extract text from PDF ---
+# --- Extract text ---
 def extract_text(file):
-    reader = PyPDF2.PdfReader(file)
     text = ""
-    for page in reader.pages:
-        text += page.extract_text()
+    try:
+        reader = PyPDF2.PdfReader(file)
+        for page in reader.pages:
+            content = page.extract_text()
+            if content:
+                text += content
+    except:
+        return ""
     return text
 
 
-# --- Simple ATS scoring ---
+# --- ATS scoring ---
 def analyze_resume(text):
     keywords = [
         "python", "machine learning", "nlp", "data",
-        "project", "api", "sql", "react", "llm"
+        "project", "api", "sql", "react", "llm",
+        "deep learning", "pandas", "tensorflow"
     ]
 
-    found = []
-    score = 0
+    text = text.lower()
 
-    for word in keywords:
-        if re.search(word, text.lower()):
-            found.append(word)
-            score += 10
+    found = [k for k in keywords if k in text]
 
-    score = min(score, 100)
+    score = int((len(found) / len(keywords)) * 100)
     return score, found
 
 
-# --- Fake AI feedback (replace with API later) ---
+# --- Smart feedback (AI-like logic) ---
 def generate_feedback(text):
-    suggestions = [
-        "Add more quantified achievements (e.g., improved performance by 30%)",
-        "Include more AI/ML related keywords",
-        "Improve project descriptions with impact",
-        "Add GitHub links for credibility",
-        "Use action verbs like Developed, Built, Implemented"
+    text = text.lower()
+    feedback = []
+
+    # Section checks
+    if "project" not in text:
+        feedback.append("Add project experience to showcase practical skills")
+
+    if "experience" not in text:
+        feedback.append("Include internship or work experience")
+
+    if "github" not in text:
+        feedback.append("Add GitHub profile link for credibility")
+
+    if "%" not in text:
+        feedback.append("Include quantified achievements (e.g., improved performance by 30%)")
+
+    # Skill checks
+    if "machine learning" not in text and "ai" not in text:
+        feedback.append("Include AI/ML related keywords if relevant")
+
+    if "sql" not in text:
+        feedback.append("Add database-related skills like SQL")
+
+    # fallback (ensure at least 3)
+    extra = [
+        "Use strong action verbs like Developed, Built, Implemented",
+        "Improve formatting and structure for readability",
+        "Tailor resume according to job description"
     ]
-    return random.sample(suggestions, 3)
+
+    feedback.extend(extra)
+
+    return feedback[:3]
