@@ -22,7 +22,7 @@ cd resume-analyzer
 pip install -r requirements.txt
 streamlit run app.py
 ```
-## 💡 Future Improvements   👈 ADD HERE
+## 💡 Future Improvements  
 - Integrate OpenAI/Gemini API for advanced AI feedback
 - Add job description matching for better ATS scoring
 - Improve NLP using spaCy/BERT embeddings
